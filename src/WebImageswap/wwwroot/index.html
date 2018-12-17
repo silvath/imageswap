@@ -5,24 +5,51 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/layout.css" rel="stylesheet" />
     <meta charset="utf-8" />
-    <title>Yange</title>
+    <title>Yanger</title>
 </head>
 <body>
     <!--Data-->
     <div d-dataKey="errors" d-dataType="array"></div>
-    <div d-dataKey="systemClipboard" d-dataType="value"></div>
-    <div d-dataKey="games" d-dataUrlGet="/api/Crawler/GetGames"></div>
+
     <!--Windows-->
     <div class="container-fluid">
         <!--Content-->
         <div d-sector="content">
-            <img src="images/yang.png" />
-            <div d-for="game in games" class="row Game">
+            <div class="row">
                 <div class="col-sm-2">
-                    <img class="GameImage" d-attr-src="{{game.Image}}" d-attr-alt="{{game.Name}}">
+                    <img src="images/yang.png" />
                 </div>
-                <div class="col-sm-10 GameNameContainer">
-                    <span class="GameName" d-model="{{game.Name}}" d-attr-title="{{game.Culture}}" d-on-click="RedirectPage({{game.Link}})"></span>
+                <div class="col-sm-10">
+                    <label class="Yanger">Yanger!</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="YinOrYangLabel">ying:</label>
+                </div>
+                <div class="col-sm-9">
+                    <input class="YinOrYangInput" type="text" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="YinOrYangLabel">yang:</label>
+                </div>
+                <div class="col-sm-9">
+                    <input class="YinOrYangInput" type="text" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <input class="YinOrYangInput" type="button" value="Yangerize!" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="YinOrYangLabel">yangerized:</label>
+                </div>
+                <div class="col-sm-9">
+                    <input class="YinOrYangInput" type="text" />
                 </div>
             </div>
         </div>

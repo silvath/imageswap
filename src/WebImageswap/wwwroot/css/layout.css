@@ -1,23 +1,13 @@
-﻿.Game {
-    padding:20px;
+﻿.Yanger {
+    font-size:10em;
 }
 
-    .Game:hover {
-        cursor: pointer;
-        box-shadow: inset 0 0 0 25px #FFD700;
-    }
-
-.GameImage {
-    height:200px;
+.YinOrYangLabel {
+    font-size:3em;
 }
 
-.GameNameContainer {
-    display: table;
-    height: 200px;
+.YinOrYangInput {
+    font-size: 3em;
 }
 
-.GameName {
-    font-size: 30px;
-    display: table-cell;
-    vertical-align: middle;
-}
+
