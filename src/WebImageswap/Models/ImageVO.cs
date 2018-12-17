@@ -10,5 +10,6 @@ namespace WebImageswap.Models
         public string Code { set; get; }
         public string Source { set; get; }
         public string Destination { set; get; }
+        public string Url { set; get; }
     }
 }
