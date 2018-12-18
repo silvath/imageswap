@@ -11,6 +11,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Sysphera.Middleware.Drapo;
 using Microsoft.Net.Http.Headers;
 using WebImageswap.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace WebGwg
 {
@@ -24,7 +25,8 @@ namespace WebGwg
                   {
                       options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                   });
-            services.AddSingleton<ImageService, ImageService>();
+            services.AddHttpContextAccessor();
+            services.AddScoped<ImageService, ImageService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info

@@ -19,7 +19,16 @@ namespace WebGwg
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-             .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>();
+            .UseContentRoot(Directory.GetCurrentDirectory())
+            .ConfigureAppConfiguration((hostingContext, builder) =>
+            {
+                builder.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath);
+                builder.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                builder.AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true);
+                builder.AddEnvironmentVariables();
+                if (hostingContext.HostingEnvironment.IsDevelopment())
+                    builder.AddUserSecrets<Startup>();
+            })
+            .UseStartup<Startup>();
     }
 }
