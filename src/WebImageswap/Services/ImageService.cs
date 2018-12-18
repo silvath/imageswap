@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebImageswap.Models;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
 
 namespace WebImageswap.Services
 {
@@ -37,7 +36,9 @@ namespace WebImageswap.Services
 
         private async Task<bool> Save(ImageVO image)
         {
-            string value = this._configuration["ConnectionString"];
+            string connectionString = this._configuration["ConnectionString"];
+            //TODO: Work over here
+
             return (await Task.FromResult(true));
         }
     }
