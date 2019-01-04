@@ -8,6 +8,10 @@
 
 .YinOrYangInput {
     font-size: 3em;
+    width:100%;
+}
+.YinOrYangButton {
+    font-size: 3em;
 }
 
 

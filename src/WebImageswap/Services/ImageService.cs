@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebImageswap.Models;
 using Microsoft.Extensions.Configuration;
+using ServiceStack.Redis;
 
 namespace WebImageswap.Services
 {
@@ -19,9 +20,19 @@ namespace WebImageswap.Services
             _contextAcessor = contextAcessor;
         }
 
+        private async Task<bool> IsValid(ImageVO image)
+        {
+            //TODO: Work over here
+            return (await Task.FromResult(true));
+        } 
+
         public async Task<ImageVO> Create(ImageVO image)
         {
             image.Code = Guid.NewGuid().ToString();
+            image.Creation = DateTime.UtcNow;
+            image.Deadline = image.Creation.AddHours(image.Hours);
+            if (!await this.IsValid(image))
+                return (null);
             await this.Save(image);
             image.Url = BuildUrl(image.Code);
             return (await Task.FromResult(image));
@@ -37,9 +48,13 @@ namespace WebImageswap.Services
         private async Task<bool> Save(ImageVO image)
         {
             string connectionString = this._configuration["ConnectionString"];
-            //TODO: Work over here
-
-            return (await Task.FromResult(true));
+            var manager = new RedisManagerPool(connectionString);
+            bool saved = false;
+            using (var client = manager.GetClient())
+            {
+                saved = client.Set<ImageVO>(image.Code, image);
+            }
+            return (await Task.FromResult(saved));
         }
     }
 }

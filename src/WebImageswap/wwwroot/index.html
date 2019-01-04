@@ -10,7 +10,7 @@
 <body>
     <!--Data-->
     <div d-dataKey="errors" d-dataType="array"></div>
-    <div d-dataKey="image" d-dataType="object"></div>
+    <div d-dataKey="image" d-dataType="object" d-dataProperty-hours-name="Hours" d-dataProperty-hours-value="1" ></div>
     <div d-dataKey="imageCreate" d-dataType="object" d-dataUrlGet="~/api/image/Create" d-dataPostGet="image"></div>
     <div d-dataKey="imageCreated" d-dataType="object"></div>
     <!--Windows-->
@@ -42,8 +42,16 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-3">
+                    <label class="YinOrYangLabel">hours:</label>
+                </div>
+                <div class="col-sm-9">
+                    <input class="YinOrYangInput" type="text" d-model="{{image.Hours}}" />
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
-                    <input class="YinOrYangInput" type="button" value="Yangerize!" d-on-click="UnloadData(imageCreate);UpdateData(imageCreated,{{imageCreate}})" />
+                    <input class="YinOrYangButton" type="button" value="Yangerize!" d-on-click="UnloadData(imageCreate);UpdateData(imageCreated,{{imageCreate}})" />
                 </div>
             </div>
             <div class="row">
