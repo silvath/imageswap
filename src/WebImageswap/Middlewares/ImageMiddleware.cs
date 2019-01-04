@@ -54,7 +54,7 @@ namespace WebImageswap.Middlewares
         {
             string path = context.Request.Path.Value.ToLower();
             int index = path.IndexOf("/image/");
-            if (index < 0)
+            if ((index < 0) || (!path.Contains(".jpg")))
                 return (await Task.FromResult<string>(string.Empty));
             int start = index + 7;
             return (path.Substring(start, path.Length - (start + 4)));

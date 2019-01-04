@@ -22,9 +22,21 @@ namespace WebImageswap.Services
 
         private async Task<bool> IsValid(ImageVO image)
         {
-            //TODO: Work over here
+            if(!this.IsValidUrl(image.Source))
+                return (await Task.FromResult(false));
+            if (!this.IsValidUrl(image.Destination))
+                return (await Task.FromResult(false));
             return (await Task.FromResult(true));
-        } 
+        }
+
+        private bool IsValidUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+                return (false);
+            if (!url.Contains(".jpg"))
+                return (false);
+            return (true);
+        }
 
         public async Task<ImageVO> Create(ImageVO image)
         {
