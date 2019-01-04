@@ -14,5 +14,20 @@ namespace WebImageswap.Models
         public DateTime Creation { set; get; }
         public int Hours { set; get; }
         public DateTime Deadline { set; get; }
+        public List<RequestVO> Requests { set; get; }
+        public ImageVO()
+        {
+            this.Requests = new List<RequestVO>();
+        }
+
+        public void AddRequest(string address)
+        {
+            if (this.Requests == null)
+                this.Requests = new List<RequestVO>();
+            RequestVO request = new RequestVO();
+            request.Address = address;
+            request.Date = DateTime.UtcNow;
+            this.Requests.Add(request);
+        }
     }
 }

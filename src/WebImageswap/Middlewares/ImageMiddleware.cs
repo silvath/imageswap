@@ -29,7 +29,7 @@ namespace WebImageswap.Middlewares
             string imageCode = await this.GetImageCode(context);
             if (!string.IsNullOrEmpty(imageCode))
             {
-                byte[] imageBody = await GetImageBody(imageCode);
+                byte[] imageBody = await GetImageBody(imageCode, context.Request.HttpContext.Connection.LocalIpAddress.ToString());
                 context.Response.OnStarting(state =>
                 {
                     var httpContext = (HttpContext)state;
@@ -60,7 +60,7 @@ namespace WebImageswap.Middlewares
             return (path.Substring(start, path.Length - (start + 4)));
         }
 
-        private async Task<byte[]> GetImageBody(string code)
+        private async Task<byte[]> GetImageBody(string code, string localAddress)
         {
             string connectionString = this._configuration["ConnectionString"];
             var manager = new RedisManagerPool(connectionString);
@@ -68,9 +68,11 @@ namespace WebImageswap.Middlewares
             using (var connection = manager.GetClient())
             {
                 image = connection.Get<ImageVO>(code);
+                if (image == null)
+                    return (await Task.FromResult<byte[]>(null));
+                image.AddRequest(localAddress);
+                connection.Set<ImageVO>(image.Code, image);
             }
-            if (image == null)
-                return (await Task.FromResult<byte[]>(null));
             string url = image.Deadline < DateTime.UtcNow ? image.Destination : image.Source;
             var client = _httpClientFactory.CreateClient();
             byte[] body = await client.GetByteArrayAsync(url);
