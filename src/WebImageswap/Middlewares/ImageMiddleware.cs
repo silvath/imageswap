@@ -29,7 +29,7 @@ namespace WebImageswap.Middlewares
             string imageCode = await this.GetImageCode(context);
             if (!string.IsNullOrEmpty(imageCode))
             {
-                byte[] imageBody = await GetImageBody(imageCode, context.Request.HttpContext.Connection.LocalIpAddress.ToString());
+                byte[] imageBody = await GetImageBody(imageCode, context.Request.HttpContext.Connection.RemoteIpAddress.ToString());
                 context.Response.OnStarting(state =>
                 {
                     var httpContext = (HttpContext)state;
