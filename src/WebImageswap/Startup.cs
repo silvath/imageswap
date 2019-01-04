@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Sysphera.Middleware.Drapo;
+using WebImageswap.Middlewares;
 using Microsoft.Net.Http.Headers;
 using WebImageswap.Services;
 using Microsoft.Extensions.Configuration;
@@ -20,12 +21,14 @@ namespace WebGwg
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDrapo();
+            services.AddImage();
             services.AddMvc()
                   .AddJsonOptions(options =>
                   {
                       options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                   });
             services.AddHttpContextAccessor();
+            services.AddHttpClient();
             services.AddScoped<ImageService, ImageService>();
             services.AddSwaggerGen(c =>
             {
@@ -45,6 +48,7 @@ namespace WebGwg
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseImage();
             app.UseDrapo(o => { ConfigureDrapo(env, o); });
             app.UseDefaultFiles();
             app.UseStaticFiles(new StaticFileOptions()
